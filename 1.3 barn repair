@@ -1,0 +1,44 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<queue>
+#include<stack>
+#include<sstream>
+#include<set>
+#include<unordered_set>
+#include<map>
+#include<unordered_map>
+#include<algorithm>
+using namespace std;
+bool cmp(vector<int>&a,vector<int>&b){
+    return a[0]>b[0];
+}
+int main(){
+    int m,s,c;
+    cin>>m>>s>>c;
+    vector<int>dp(c,0);
+    for(int i=0;i<c;i++){
+        cin>>dp[i];
+    }
+    sort(dp.begin(),dp.end());
+    vector<vector<int> >intervals(c-1);
+    for(int i=1;i<c;i++){
+        intervals[i-1]={dp[i]-dp[i-1],dp[i-1],dp[i]};
+    }
+    sort(intervals.begin(),intervals.end(),cmp);
+    int n=min(m,c);
+    vector<int>ans;
+    for(int i=0;i<n-1;i++){
+        ans.push_back(intervals[i][1]);
+        ans.push_back(intervals[i][2]);
+    }
+    ans.push_back(dp[0]);
+    ans.push_back(dp.back());
+    sort(ans.begin(),ans.end());
+    int res=0;
+    for(int i=1;i<ans.size();i+=2){
+        res+=ans[i]-ans[i-1]+1;
+    }
+    cout<<res<<endl;
+    return 0;
+}
