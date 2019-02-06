@@ -1,0 +1,46 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<queue>
+#include<stack>
+#include<sstream>
+#include<set>
+#include<unordered_set>
+#include<map>
+#include<unordered_map>
+#include<algorithm>
+using namespace std;
+int search(string a,vector<string>&names){
+    for(int i=0;i<names.size();i++){
+        if(a==names[i])
+            return i;
+    }
+    return -1;
+}
+int main(){
+    int n;
+    cin>>n;
+    vector<string>names(n);
+    vector<int>moneys(n,0);
+    for(int i=0;i<n;i++){
+        cin>>names[i];
+    }
+    for(int i=0;i<n;i++){
+        string name;
+        int money,count;
+        cin>>name;
+        cin>>money>>count;
+        if(count==0)
+            continue;
+        moneys[search(name,names)]-=money-money%count;
+        for(int j=0;j<count;j++){
+            string pp;
+            cin>>pp;
+            moneys[search(pp,names)]+=money/count;
+        }
+    }
+    for(int i=0;i<n;i++){
+        cout<<names[i]<<" "<<moneys[i]<<endl;
+    }
+    return 0;
+}
