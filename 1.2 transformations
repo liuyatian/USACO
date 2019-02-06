@@ -1,0 +1,117 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<queue>
+#include<stack>
+#include<sstream>
+#include<set>
+#include<unordered_set>
+#include<map>
+#include<unordered_map>
+#include<algorithm>
+using namespace std;
+bool solver(vector<string>a,vector<string>b){
+    int n=a.size();
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            if(a[i][j]!=b[i][j])
+                return false;
+        }
+    }
+    return true;
+}
+vector<string> trans1(vector<string>a){
+    int n=a.size();
+    vector<string>b=a;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            b[i][j]=a[n-1-j][i];
+        }
+    }
+    return b;
+}
+vector<string> trans2(vector<string>a){
+    int n=a.size();
+    vector<string>b=a;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            b[i][j]=a[n-1-i][n-1-j];
+        }
+    }
+    return b;
+}
+vector<string> trans3(vector<string>a){
+    int n=a.size();
+    vector<string>b=a;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            b[i][j]=a[j][n-1-i];
+        }
+    }
+    return b;
+}
+vector<string> trans4(vector<string>a){
+    int n=a.size();
+    vector<string>b=a;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            b[i][j]=a[i][n-1-j];
+        }
+    }
+    return b;
+}
+vector<vector<string> > trans5(vector<string>a){
+    int n=a.size();
+    vector<string>b=trans4(a);
+    vector<vector<string> >res;
+    res.push_back(trans1(b));
+    res.push_back(trans2(b));
+    res.push_back(trans3(b));
+    return res;
+}
+vector<string> trans6(vector<string>a){
+    return a;
+}
+int main(){
+    int n;
+    cin>>n;
+    vector<string>one,two;
+    string temp;
+    for(int i=0;i<n;i++){
+        cin>>temp;
+        one.push_back(temp);
+    }
+    for(int i=0;i<n;i++){
+        cin>>temp;
+        two.push_back(temp);
+    }
+    if(trans1(one)==two){
+        cout<<1<<endl;
+        return 0;
+    }
+    if(trans2(one)==two){
+        cout<<2<<endl;
+        return 0;
+    }
+    if(trans3(one)==two){
+        cout<<3<<endl;
+        return 0;
+    }
+    if(trans4(one)==two){
+        cout<<4<<endl;
+        return 0;
+    }
+    vector<vector<string> >dp=trans5(one);
+    for(int i=0;i<3;i++){
+        if(dp[i]==two){
+            cout<<5<<endl;
+            return 0;
+        }
+    }
+    if(trans6(one)==two){
+        cout<<6<<endl;
+        return 0;
+    }
+    cout<<7<<endl;
+    return 0;
+}
