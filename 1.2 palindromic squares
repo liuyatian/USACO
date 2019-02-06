@@ -1,0 +1,51 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<queue>
+#include<stack>
+#include<sstream>
+#include<set>
+#include<unordered_set>
+#include<map>
+#include<unordered_map>
+#include<algorithm>
+using namespace std;
+string solver(int x,int n){
+    string res;
+    while(x){
+        int t=x%n;
+        if(t<10){
+            res+=(char)(t+'0');
+        }
+        else{
+            res+=(char)(t-10+'A');
+        }
+        x/=n;
+    }
+    return res;
+}
+bool judge(string a){
+    int len=a.size();
+    for(int i=0;i<len/2;i++){
+        if(a[i]!=a[len-1-i])
+            return false;
+    }
+    return true;
+}
+int main(){
+    int n;
+    cin>>n;
+    vector<pair<string,string> >res;
+    for(int i=1;i<=300;i++){
+        int t=i*i;
+        string temp=solver(t,n);
+        string kk=solver(i,n);
+        reverse(kk.begin(),kk.end());
+        if(judge(temp))
+            res.push_back({kk,temp});
+    }
+    for(int i=0;i<res.size();i++){
+        cout<<res[i].first<<' '<<res[i].second<<endl;
+    }
+    return 0;
+}
