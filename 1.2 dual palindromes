@@ -1,0 +1,47 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<queue>
+#include<stack>
+#include<sstream>
+#include<set>
+#include<unordered_set>
+#include<map>
+#include<unordered_map>
+#include<algorithm>
+using namespace std;
+bool solver(int x,int k){
+    vector<int>ans;
+    while(x){
+        int y=x%k;
+        ans.push_back(y);
+        x/=k;
+    }
+    int len=ans.size();
+    for(int i=0;i<(len/2);i++){
+        if(ans[i]!=ans[len-1-i])
+            return false;
+    }
+    return true;
+}
+int main(){
+    int m,n;
+    cin>>m>>n;
+    int t=n+1;
+    while(true){
+        int cnt=0;
+        for(int i=2;i<=10;i++){
+            if(solver(t,i))
+                cnt++;
+            if(cnt==2){
+                cout<<t<<endl;
+                m--;
+                break;
+            }
+        }
+        if(m==0)
+            break;
+        t++;
+    }
+    return 0;
+}
