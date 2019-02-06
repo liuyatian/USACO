@@ -1,0 +1,37 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<queue>
+#include<stack>
+#include<sstream>
+#include<set>
+#include<unordered_set>
+#include<map>
+#include<unordered_map>
+#include<algorithm>
+using namespace std;
+vector<int>day(7,0);
+int solver(int x,int y,int cur){
+    if(y<=2){
+        x--;
+        y+=12;
+    }
+    int d=x%100;
+    int c=x/100;
+    int w=(c/4-c*2+d+d/4+(13*(y+1)/5)+cur-1)%7;
+    if(w<0)
+        w+=7;
+    return w;
+}
+int main(){
+    int n;
+    cin>>n;
+    for(int i=1900;i<1900+n;i++){
+        for(int j=1;j<=12;j++){
+            int k=solver(i,j,13);
+            day[k]++;
+        }
+    }
+    cout<<day[6]<<' '<<day[0]<<' '<<day[1]<<' '<<day[2]<<' '<<day[3]<<' '<<day[4]<<' '<<day[5]<<endl;
+    return 0;
+}
