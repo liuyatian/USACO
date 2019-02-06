@@ -1,0 +1,38 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<queue>
+#include<stack>
+#include<sstream>
+#include<set>
+#include<unordered_set>
+#include<map>
+#include<unordered_map>
+#include<algorithm>
+using namespace std;
+int main(){
+    int n;
+    cin>>n;
+    vector<pair<int,int> >dp;
+    for(int i=0;i<n;i++){
+        int x,y;
+        cin>>x>>y;
+        dp.push_back({x,y});
+    }
+    sort(dp.begin(),dp.end());
+    int start=dp[0].first,end=dp[0].second,res1=0,res2=0;
+    for(int i=1;i<dp.size();i++){
+        if(dp[i].first<=end){
+            end=max(dp[i].second,end);
+        }
+        else{
+            res1=max(res1,end-start);
+            res2=max(res2,dp[i].first-end);
+            start=dp[i].first;
+            end=dp[i].second;
+        }
+    }
+    res1=max(res1,end-start);
+    cout<<res1<<' '<<res2<<endl;
+    return 0;
+}
