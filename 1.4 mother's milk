@@ -1,0 +1,82 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<queue>
+#include<stack>
+#include<sstream>
+#include<set>
+#include<unordered_set>
+#include<map>
+#include<unordered_map>
+#include<algorithm>
+using namespace std;
+int main(){
+    int a,b,c;
+    while(cin>>a>>b>>c){
+        queue<vector<int> >q;
+        q.push({0,0,c});
+        vector<int>res;
+        set<vector<int> >st;
+        st.insert({0,0,c});
+        while(!q.empty()){
+            auto temp=q.front();
+            q.pop();
+            if(temp[0]==0){
+                res.push_back(temp[2]);
+            }
+            if(temp[0]){
+                if(temp[1]<b){
+                    int aa=temp[0]-min(b-temp[1],temp[0]),bb=min(temp[1]+temp[0],b),cc=temp[2];
+                    if(!st.count({aa,bb,cc})){
+                        q.push({aa,bb,cc});
+                        st.insert({aa,bb,cc});
+                    }
+                }
+                if(temp[2]<c){
+                    int aa=temp[0]-min(c-temp[2],temp[0]),bb=temp[1],cc=min(temp[2]+temp[0],c);
+                    if(!st.count({aa,bb,cc})){
+                        q.push({aa,bb,cc});
+                        st.insert({aa,bb,cc});
+                    }
+                }
+            }
+            if(temp[1]){
+                if(temp[0]<a){
+                    int aa=min(temp[0]+temp[1],a),bb=temp[1]-min(a-temp[0],temp[1]),cc=temp[2];
+                    if(!st.count({aa,bb,cc})){
+                        q.push({aa,bb,cc});
+                        st.insert({aa,bb,cc});
+                    }
+                }
+                if(temp[2]<c){
+                    int aa=temp[0],bb=temp[1]-min(c-temp[2],temp[1]),cc=min(temp[2]+temp[1],c);
+                    if(!st.count({aa,bb,cc})){
+                        q.push({aa,bb,cc});
+                        st.insert({aa,bb,cc});
+                    }
+                }
+            }
+            if(temp[2]){
+                if(temp[0]<a){
+                    int aa=min(a,temp[0]+temp[2]),bb=temp[1],cc=temp[2]-min(temp[2],a-temp[0]);
+                    if(!st.count({aa,bb,cc})){
+                        q.push({aa,bb,cc});
+                        st.insert({aa,bb,cc});
+                    }
+                }
+                if(temp[1]<b){
+                    int aa=temp[0],bb=min(temp[2]+temp[1],b),cc=temp[2]-min(temp[2],b-temp[1]);
+                    if(!st.count({aa,bb,cc})){
+                        q.push({aa,bb,cc});
+                        st.insert({aa,bb,cc});
+                    }
+                }
+            }
+        }
+        sort(res.begin(),res.end());
+        for(int i=0;i<res.size();i++)
+            cout<<res[i]<<' ';
+        cout<<endl;
+    }
+    return 0;
+}
