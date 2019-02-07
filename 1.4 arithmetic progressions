@@ -1,0 +1,53 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<queue>
+#include<stack>
+#include<sstream>
+#include<set>
+#include<unordered_set>
+#include<map>
+#include<unordered_map>
+#include<algorithm>
+using namespace std;
+int main(){
+    int n,m;
+    cin>>n>>m;
+    vector<int>v(200010,0);
+    for(int i=0;i<=m;i++){
+        for(int j=0;j<=m;j++){
+            v[i*i+j*j]=1;
+        }
+    }
+    vector<pair<int,int> >res;
+    for(int i=0;i<=m*m*2;i++){
+        if(v[i]){
+            for(int j=i+1;j<=m*m*2;j++){
+                if(v[j]){
+                    int a=j,diff=j-i,k=0;
+                    if(i+(n-1)*diff>m*m*2)
+                        break;
+                    for(;k<n-2;k++){
+                        a+=diff;
+                        if(!v[a])
+                            break;
+                    }
+                    if(k==n-2)
+                        res.push_back({i,diff});
+                }
+            }
+        }
+    }
+    sort(res.begin(),res.end(),[](const pair<int,int>&a,const pair<int,int>&b){
+        if(a.second==b.second)
+            return a.first<b.first;
+        return a.second<b.second;
+    });
+    if(res.size()==0){
+        cout<<"NONE"<<endl;
+        return 0;
+    }
+    for(int i=0;i<res.size();i++)
+        cout<<res[i].first<<' '<<res[i].second<<endl;
+    return 0;
+}
