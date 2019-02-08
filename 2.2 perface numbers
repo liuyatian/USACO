@@ -1,0 +1,49 @@
+#include<iostream>
+#include<cmath>
+#include<string>
+#include<vector>
+#include<queue>
+#include<stack>
+#include<sstream>
+#include<set>
+#include<unordered_set>
+#include<map>
+#include<unordered_map>
+#include<algorithm>
+using namespace std;
+int nums[50]={0,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100,200,300,400,500,600,700,800,900,1000,2000,3000};
+string luoma[50]={"","I","II","III","IV","V","VI","VII","VIII","IX","X","XX","XXX","XL","L","LX","LXX","LXXX","XC","C","CC","CCC","CD","D","DC","DCC","DCCC","CM","M","MM","MMM"};
+int main(){
+    int n;
+    cin>>n;
+    unordered_map<char,int>mp;
+    for(int i=1;i<=n;i++){
+        int temp=i,k=30;
+        while(temp<nums[k])
+            k--;
+        while(temp){
+            if(temp>=nums[k]){
+                temp-=nums[k];
+                for(int j=0;j<luoma[k].size();j++){
+                    mp[luoma[k][j]]++;
+                }
+            }
+            k--;
+        }
+    }
+    if(mp['I'])
+        cout<<'I'<<' '<<mp['I']<<endl;
+    if(mp['V'])
+        cout<<'V'<<' '<<mp['V']<<endl;
+    if(mp['X'])
+        cout<<'X'<<' '<<mp['X']<<endl;
+    if(mp['L'])
+        cout<<'L'<<' '<<mp['L']<<endl;
+    if(mp['C'])
+        cout<<'C'<<' '<<mp['C']<<endl;
+    if(mp['D'])
+        cout<<'D'<<' '<<mp['D']<<endl;
+    if(mp['M'])
+        cout<<'M'<<' '<<mp['M']<<endl;
+    return 0;
+}
