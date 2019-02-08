@@ -1,0 +1,58 @@
+#include<iostream>
+#include<cmath>
+#include<string>
+#include<vector>
+#include<queue>
+#include<stack>
+#include<sstream>
+#include<set>
+#include<unordered_set>
+#include<map>
+#include<unordered_map>
+#include<algorithm>
+using namespace std;
+int n,m;
+void dfs(vector<vector<int> >&dp,int t,vector<int>ans,vector<int>&res,vector<int>cur,vector<int>v){
+    bool flag=true;
+    for(int i=0;i<m;i++){
+        if(ans[i]<v[i]){
+            flag=false;
+            break;
+        }
+    }
+    if(flag==true){
+        if(res.size()==0)
+            res=cur;
+        else if(cur.size()<=res.size())
+            res=cur;
+        return;
+    }
+    if(t>=n)
+        return;
+    dfs(dp,t+1,ans,res,cur,v);
+    for(int i=0;i<m;i++)
+        ans[i]+=dp[t][i];
+    cur.push_back(t+1);
+    dfs(dp,t+1,ans,res,cur,v);
+    return;
+}
+int main(){
+    cin>>m;
+    vector<int>v(m,0);
+    for(int i=0;i<m;i++)
+        cin>>v[i];
+    cin>>n;
+    vector<vector<int> >dp(n,vector<int>(m,0));
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            cin>>dp[i][j];
+        }
+    }
+    vector<int>res,cur,ans(m,0);
+    dfs(dp,0,ans,res,cur,v);
+    cout<<res.size()<<' ';
+    for(int i=0;i<res.size();i++)
+        cout<<res[i]<<' ';
+    cout<<endl;
+    return 0;
+}
