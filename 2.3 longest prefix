@@ -1,0 +1,38 @@
+#include<iostream>
+#include<cmath>
+#include<string>
+#include<vector>
+#include<queue>
+#include<stack>
+#include<sstream>
+#include<set>
+#include<unordered_set>
+#include<map>
+#include<unordered_map>
+#include<algorithm>
+using namespace std;
+int main(){
+    string oo;
+    vector<string>v;
+    while(cin>>oo){
+        if(oo==".")
+            break;
+        v.push_back(oo);
+    }
+    string temp;
+    while(cin>>oo){
+        temp=temp+oo;
+    }
+    int m=v.size(),n=temp.size();
+    vector<int>dp(n+1,0);
+    for(int i=n-1;i>=0;i--){
+        for(int j=0;j<m;j++){
+            if(n-i<v[j].size())
+                continue;
+            if(v[j]==temp.substr(i,v[j].size()))
+                dp[i]=max(dp[i],dp[i+v[j].size()]+(int)v[j].size());
+        }
+    }
+    cout<<dp[0]<<endl;
+    return 0;
+}
