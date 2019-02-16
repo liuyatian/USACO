@@ -1,0 +1,42 @@
+#include<iostream>
+#include<cmath>
+#include<string>
+#include<vector>
+#include<queue>
+#include<stack>
+#include<sstream>
+#include<set>
+#include<unordered_set>
+#include<map>
+#include<unordered_map>
+#include<algorithm>
+using namespace std;
+vector<string>res;
+int n;
+void solver(string ans,int cur,int pos,int sum,string kk){
+    if(pos==n+1){
+        if(cur==0&&sum==0)
+            res.push_back(ans);
+        return;
+    }
+    sum=sum*10+pos;
+    if(kk=="")
+        kk=kk+(char)(pos+'0');
+    else
+        kk=kk+' '+(char)(pos+'0');
+    solver(ans,cur,pos+1,sum,kk);
+    if(ans=="")
+        solver(kk,sum,pos+1,0,"");
+    else{
+        solver(ans+'+'+kk,cur+sum,pos+1,0,"");
+        solver(ans+'-'+kk,cur-sum,pos+1,0,"");
+    }
+}
+int main(){
+    cin>>n;
+    solver("",0,1,0,"");
+    sort(res.begin(),res.end());
+    for(int i=0;i<res.size();i++)
+        cout<<res[i]<<endl;
+    return 0;
+}
