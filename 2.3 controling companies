@@ -1,0 +1,61 @@
+#include<iostream>
+#include<cmath>
+#include<string>
+#include<vector>
+#include<queue>
+#include<stack>
+#include<sstream>
+#include<set>
+#include<unordered_set>
+#include<map>
+#include<unordered_map>
+#include<algorithm>
+using namespace std;
+struct edge{
+    int from,to,v;
+};
+vector<edge>edges;
+vector<int>g[102];
+void addedge(int from,int to,int v){
+    edges.push_back({from,to,v});
+    int mm=edges.size();
+    g[from].push_back(mm-1);
+}
+int main(){
+    int n,num=0;
+    cin>>n;
+    for(int i=1;i<=n;i++){
+        int from,to,v;
+        cin>>from>>to>>v;
+        addedge(from,to,v);
+        num=max(num,from);
+        num=max(num,to);
+    }
+    vector<pair<int,int> >res;
+    for(int i=1;i<=num;i++){
+        queue<int>q;
+        q.push(i);
+        unordered_set<int>st;
+        st.insert(i);
+        vector<int>score(n+1,0);
+        while(!q.empty()){
+            int temp=q.front();
+            q.pop();
+            for(int j=0;j<g[temp].size();j++){
+                edge nn=edges[g[temp][j]];
+                if(st.count(nn.to))
+                    continue;
+                score[nn.to]+=nn.v;
+                if(score[nn.to]>50){
+                    q.push(nn.to);
+                    st.insert(nn.to);
+                    res.push_back({i,nn.to});
+                }
+            }
+        }
+    }
+    sort(res.begin(),res.end());
+    for(int i=0;i<res.size();i++)
+        cout<<res[i].first<<' '<<res[i].second<<endl;
+    return 0;
+}
